@@ -148,12 +148,17 @@ const duration2 = (row2.length / 2 * pixelsPerItem) / pixelsPerSecond;
             <button class="mode-btn active" data-mode="oneliner">Just Works</button>
             <button class="mode-btn" data-mode="quick">npm install</button>
             <button class="mode-btn" data-mode="hackable">Hackable</button>
+            <button class="mode-btn" data-mode="macos">macOS App</button>
           </div>
           <div class="pm-switch" id="pm-switch" style="display: none;">
             <button class="pm-btn active" data-pm="npm">npm</button>
             <button class="pm-btn" data-pm="pnpm">pnpm</button>
           </div>
-          <div class="os-switch" id="os-switch">
+          <div class="os-indicator" id="os-indicator">
+            <span class="os-detected" id="os-detected">macOS/Linux</span>
+            <button class="os-change-btn" id="os-change-btn">change</button>
+          </div>
+          <div class="os-switch" id="os-switch" style="display: none;">
             <button class="os-btn active" data-os="unix">macOS/Linux</button>
             <button class="os-btn" data-os="windows">Windows</button>
           </div>
@@ -217,6 +222,23 @@ const duration2 = (row2.length / 2 * pixelsPerItem) / pixelsPerSecond;
             </button>
           </div>
         </div>
+        <div id="code-macos" class="code-content" style="display: none;">
+          <div class="macos-app-content">
+            <div class="macos-description">
+              <span class="macos-tagline">Spinable local web server</span>
+              <span class="macos-subtitle">No terminal needed — just download, open, and go.</span>
+            </div>
+            <a href="https://github.com/clawdbot/clawdbot/releases/latest" class="macos-download-btn" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              Download for macOS
+            </a>
+            <span class="macos-meta">Requires macOS 14+ · Universal Binary</span>
+          </div>
+        </div>
       </div>
       <p class="quickstart-note">
         Works on macOS, Windows & Linux. The one-liner installs Node.js and everything else for you.
@@ -234,8 +256,14 @@ const duration2 = (row2.length / 2 * pixelsPerItem) / pixelsPerSecond;
         windows: 'iwr -useb https://clawd.bot/install.ps1 | iex'
       };
 
+      const osLabels = {
+        unix: 'macOS/Linux',
+        windows: 'Windows'
+      };
+
       let currentPm = 'npm';
       let currentMode = 'oneliner';
+      let osPickerExpanded = false;
 
       // Auto-detect OS
       const isWindows = navigator.platform.toLowerCase().includes('win') ||
@@ -247,9 +275,13 @@ const duration2 = (row2.length / 2 * pixelsPerItem) / pixelsPerSecond;
       const modeBtns = document.querySelectorAll('.mode-btn');
       const pmSwitch = document.getElementById('pm-switch');
       const osSwitch = document.getElementById('os-switch');
+      const osIndicator = document.getElementById('os-indicator');
+      const osDetected = document.getElementById('os-detected');
+      const osChangeBtn = document.getElementById('os-change-btn');
       const codeOneliner = document.getElementById('code-oneliner');
       const codeQuick = document.getElementById('code-quick');
       const codeHackable = document.getElementById('code-hackable');
+      const codeMacos = document.getElementById('code-macos');
 
       function updateCommands() {
         // Update hackable mode commands
@@ -258,17 +290,30 @@ const duration2 = (row2.length / 2 * pixelsPerItem) / pixelsPerSecond;
         document.querySelectorAll('.pm-install').forEach(cmd => cmd.textContent = installCmds[currentPm]);
         // Update one-liner OS command
         document.querySelectorAll('.os-cmd').forEach(cmd => cmd.textContent = osCmds[currentOs]);
+        // Update OS indicator text
+        osDetected.textContent = osLabels[currentOs];
       }
 
       function updateVisibility() {
         codeOneliner.style.display = currentMode === 'oneliner' ? 'block' : 'none';
         codeQuick.style.display = currentMode === 'quick' ? 'block' : 'none';
         codeHackable.style.display = currentMode === 'hackable' ? 'block' : 'none';
+        codeMacos.style.display = currentMode === 'macos' ? 'block' : 'none';
 
-        // Show OS switch only for one-liner, PM switch for others
-        osSwitch.style.display = currentMode === 'oneliner' ? 'flex' : 'none';
-        pmSwitch.style.display = currentMode !== 'oneliner' ? 'flex' : 'none';
+        // Show OS indicator for one-liner, PM switch for quick/hackable, nothing for macos
+        const showOsControls = currentMode === 'oneliner';
+        const showPmControls = currentMode === 'quick' || currentMode === 'hackable';
+
+        osIndicator.style.display = showOsControls && !osPickerExpanded ? 'flex' : 'none';
+        osSwitch.style.display = showOsControls && osPickerExpanded ? 'flex' : 'none';
+        pmSwitch.style.display = showPmControls ? 'flex' : 'none';
       }
+
+      // OS change toggle
+      osChangeBtn.addEventListener('click', () => {
+        osPickerExpanded = true;
+        updateVisibility();
+      });
 
       pmBtns.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -284,7 +329,9 @@ const duration2 = (row2.length / 2 * pixelsPerItem) / pixelsPerSecond;
           currentOs = btn.dataset.os;
           osBtns.forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
+          osPickerExpanded = false; // Collapse after selection
           updateCommands();
+          updateVisibility();
         });
       });
 
@@ -293,6 +340,7 @@ const duration2 = (row2.length / 2 * pixelsPerItem) / pixelsPerSecond;
           currentMode = btn.dataset.mode;
           modeBtns.forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
+          osPickerExpanded = false; // Reset when switching modes
           updateVisibility();
         });
       });
@@ -1078,6 +1126,99 @@ const duration2 = (row2.length / 2 * pixelsPerItem) / pixelsPerSecond;
     text-align: center;
   }
 
+  /* OS Indicator */
+  .os-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  .os-detected {
+    color: var(--text-secondary);
+  }
+
+  .os-change-btn {
+    background: none;
+    border: none;
+    color: var(--coral-bright);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 4px;
+    transition: all 0.15s ease;
+  }
+
+  .os-change-btn:hover {
+    background: rgba(255, 77, 77, 0.15);
+    color: var(--cyan-bright);
+  }
+
+  /* macOS App Download Section */
+  .macos-app-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 24px 16px;
+    text-align: center;
+  }
+
+  .macos-description {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .macos-tagline {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .macos-subtitle {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+
+  .macos-download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 28px;
+    background: linear-gradient(135deg, var(--coral-bright) 0%, var(--coral-dark) 100%);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 20px rgba(255, 77, 77, 0.3);
+  }
+
+  .macos-download-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(255, 77, 77, 0.4);
+  }
+
+  .macos-download-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .macos-meta {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
   /* Footer */
   .footer {
     margin-top: auto;
@@ -1280,6 +1421,52 @@ const duration2 = (row2.length / 2 * pixelsPerItem) / pixelsPerSecond;
 
     .testimonial-quote {
       font-size: 0.85rem;
+    }
+
+    /* Quick Start mobile layout */
+    .code-header {
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .mode-switch {
+      order: 1;
+      width: 100%;
+      justify-content: center;
+      margin-top: 8px;
+    }
+
+    .code-dot {
+      order: 0;
+    }
+
+    .code-dot:nth-child(1) { order: 0; }
+    .code-dot:nth-child(2) { order: 0; }
+    .code-dot:nth-child(3) { order: 0; }
+
+    .os-indicator,
+    .os-switch,
+    .pm-switch {
+      order: 2;
+      width: 100%;
+      justify-content: center;
+      margin-left: 0;
+    }
+
+    .mode-btn {
+      padding: 6px 8px;
+      font-size: 0.65rem;
+    }
+
+    .os-btn,
+    .pm-btn {
+      padding: 4px 8px;
+      font-size: 0.65rem;
+    }
+
+    .macos-download-btn {
+      padding: 12px 20px;
+      font-size: 0.9rem;
     }
   }
 </style>
