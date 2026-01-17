@@ -727,12 +727,12 @@ install_clawdbot() {
     fi
 
     if [[ "${CLAWDBOT_VERSION}" == "latest" ]]; then
-        if ! SHARP_IGNORE_GLOBAL_LIBVIPS="$SHARP_IGNORE_GLOBAL_LIBVIPS" npm --loglevel "$NPM_LOGLEVEL" install -g "clawdbot@latest"; then
+        if ! SHARP_IGNORE_GLOBAL_LIBVIPS="$SHARP_IGNORE_GLOBAL_LIBVIPS" npm --loglevel "$NPM_LOGLEVEL" --silent --no-fund --no-audit install -g "clawdbot@latest"; then
             echo -e "${WARN}→${NC} npm install clawdbot@latest failed; retrying clawdbot@next"
-            SHARP_IGNORE_GLOBAL_LIBVIPS="$SHARP_IGNORE_GLOBAL_LIBVIPS" npm --loglevel "$NPM_LOGLEVEL" install -g "clawdbot@next"
+            SHARP_IGNORE_GLOBAL_LIBVIPS="$SHARP_IGNORE_GLOBAL_LIBVIPS" npm --loglevel "$NPM_LOGLEVEL" --silent --no-fund --no-audit install -g "clawdbot@next"
         fi
     else
-        SHARP_IGNORE_GLOBAL_LIBVIPS="$SHARP_IGNORE_GLOBAL_LIBVIPS" npm --loglevel "$NPM_LOGLEVEL" install -g "clawdbot@${CLAWDBOT_VERSION}"
+        SHARP_IGNORE_GLOBAL_LIBVIPS="$SHARP_IGNORE_GLOBAL_LIBVIPS" npm --loglevel "$NPM_LOGLEVEL" --silent --no-fund --no-audit install -g "clawdbot@${CLAWDBOT_VERSION}"
     fi
 
     echo -e "${SUCCESS}✓${NC} Clawdbot installed"
