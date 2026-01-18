@@ -930,6 +930,7 @@ EOF
         install_node
     fi
 
+    local final_git_dir=""
     if [[ "$INSTALL_METHOD" == "git" ]]; then
         # Clean up npm global install if switching to git
         if npm list -g clawdbot &>/dev/null; then
@@ -942,6 +943,7 @@ EOF
         if [[ -n "$detected_checkout" ]]; then
             repo_dir="$detected_checkout"
         fi
+        final_git_dir="$repo_dir"
         install_clawdbot_from_git "$repo_dir"
     else
         # Clean up git wrapper if switching to npm
@@ -1043,7 +1045,9 @@ EOF
     fi
     echo ""
 
-    if [[ "$INSTALL_METHOD" == "git" ]]; then
+    if [[ "$INSTALL_METHOD" == "git" && -n "$final_git_dir" ]]; then
+        echo -e "Source checkout: ${INFO}${final_git_dir}${NC}"
+        echo -e "Wrapper: ${INFO}\$HOME/.local/bin/clawdbot${NC}"
         echo -e "Installed from source. To update later, run: ${INFO}clawdbot update --restart${NC}"
         echo -e "Switch to global install later: ${INFO}curl -fsSL --proto '=https' --tlsv1.2 https://clawd.bot/install.sh | bash -s -- --install-method npm${NC}"
     elif [[ "$is_upgrade" == "true" ]]; then

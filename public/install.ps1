@@ -3,7 +3,10 @@
 #        & ([scriptblock]::Create((iwr -useb https://clawd.bot/install.ps1))) -Tag beta
 
 param(
-    [string]$Tag = "latest"
+    [string]$Tag = "latest",
+    [ValidateSet("npm", "git")]
+    [string]$InstallMethod = "npm",
+    [string]$GitDir
 )
 
 $ErrorActionPreference = "Stop"
@@ -19,6 +22,22 @@ if ($PSVersionTable.PSVersion.Major -lt 5) {
 }
 
 Write-Host "[OK] Windows detected" -ForegroundColor Green
+
+if (-not $PSBoundParameters.ContainsKey("InstallMethod")) {
+    if (-not [string]::IsNullOrWhiteSpace($env:CLAWDBOT_INSTALL_METHOD)) {
+        $InstallMethod = $env:CLAWDBOT_INSTALL_METHOD
+    }
+}
+if (-not $PSBoundParameters.ContainsKey("GitDir")) {
+    if (-not [string]::IsNullOrWhiteSpace($env:CLAWDBOT_GIT_DIR)) {
+        $GitDir = $env:CLAWDBOT_GIT_DIR
+    }
+}
+
+if ([string]::IsNullOrWhiteSpace($GitDir)) {
+    $home = [Environment]::GetFolderPath("UserProfile")
+    $GitDir = (Join-Path $home "clawdbot")
+}
 
 # Check for Node.js
 function Check-Node {
@@ -97,6 +116,46 @@ function Check-ExistingClawdbot {
     }
 }
 
+function Check-Git {
+    try {
+        $null = Get-Command git -ErrorAction Stop
+        return $true
+    } catch {
+        return $false
+    }
+}
+
+function Require-Git {
+    if (Check-Git) { return }
+    Write-Host ""
+    Write-Host "Error: Git is required for --InstallMethod git." -ForegroundColor Red
+    Write-Host "Install Git for Windows:" -ForegroundColor Yellow
+    Write-Host "  https://git-scm.com/download/win" -ForegroundColor Cyan
+    Write-Host "Then re-run this installer." -ForegroundColor Yellow
+    exit 1
+}
+
+function Ensure-Pnpm {
+    if (Get-Command pnpm -ErrorAction SilentlyContinue) {
+        return
+    }
+    if (Get-Command corepack -ErrorAction SilentlyContinue) {
+        try {
+            corepack enable | Out-Null
+            corepack prepare pnpm@latest --activate | Out-Null
+            if (Get-Command pnpm -ErrorAction SilentlyContinue) {
+                Write-Host "[OK] pnpm installed via corepack" -ForegroundColor Green
+                return
+            }
+        } catch {
+            # fallthrough to npm install
+        }
+    }
+    Write-Host "[*] Installing pnpm..." -ForegroundColor Yellow
+    npm install -g pnpm
+    Write-Host "[OK] pnpm installed" -ForegroundColor Green
+}
+
 # Install Clawdbot
 function Install-Clawdbot {
     if ([string]::IsNullOrWhiteSpace($Tag)) {
@@ -122,6 +181,54 @@ function Install-Clawdbot {
     Write-Host "[OK] Clawdbot installed" -ForegroundColor Green
 }
 
+# Install Clawdbot from GitHub
+function Install-ClawdbotFromGit {
+    param(
+        [string]$RepoDir
+    )
+    Require-Git
+    Ensure-Pnpm
+
+    $repoUrl = "https://github.com/clawdbot/clawdbot.git"
+    Write-Host "[*] Installing Clawdbot from GitHub ($repoUrl)..." -ForegroundColor Yellow
+
+    if (-not (Test-Path $RepoDir)) {
+        git clone $repoUrl $RepoDir
+    }
+
+    if (-not (git -C $RepoDir status --porcelain 2>$null)) {
+        git -C $RepoDir pull --rebase 2>$null
+    } else {
+        Write-Host "[!] Repo is dirty; skipping git pull" -ForegroundColor Yellow
+    }
+
+    Remove-LegacySubmodule
+
+    pnpm -C $RepoDir install
+    if (-not (pnpm -C $RepoDir ui:build)) {
+        Write-Host "[!] UI build failed; continuing (CLI may still work)" -ForegroundColor Yellow
+    }
+    pnpm -C $RepoDir build
+
+    $binDir = Join-Path $env:USERPROFILE ".local\\bin"
+    if (-not (Test-Path $binDir)) {
+        New-Item -ItemType Directory -Force -Path $binDir | Out-Null
+    }
+    $cmdPath = Join-Path $binDir "clawdbot.cmd"
+    $cmdContents = "@echo off`r`nnode ""$RepoDir\\dist\\entry.js"" %*`r`n"
+    Set-Content -Path $cmdPath -Value $cmdContents -NoNewline
+
+    $userPath = [Environment]::GetEnvironmentVariable("Path", "User")
+    if (-not ($userPath -split ";" | Where-Object { $_ -ieq $binDir })) {
+        [Environment]::SetEnvironmentVariable("Path", "$userPath;$binDir", "User")
+        $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+        Write-Host "[!] Added $binDir to user PATH (restart terminal if command not found)" -ForegroundColor Yellow
+    }
+
+    Write-Host "[OK] Clawdbot wrapper installed to $cmdPath" -ForegroundColor Green
+    Write-Host "[i] This checkout uses pnpm. For deps, run: pnpm install (avoid npm install in the repo)." -ForegroundColor Gray
+}
+
 # Run doctor for migrations (safe, non-interactive)
 function Run-Doctor {
     Write-Host "[*] Running doctor to migrate settings..." -ForegroundColor Yellow
@@ -142,7 +249,12 @@ function Get-LegacyRepoDir {
 }
 
 function Remove-LegacySubmodule {
-    $repoDir = Get-LegacyRepoDir
+    param(
+        [string]$RepoDir
+    )
+    if ([string]::IsNullOrWhiteSpace($RepoDir)) {
+        $RepoDir = Get-LegacyRepoDir
+    }
     $legacyDir = Join-Path $repoDir "Peekaboo"
     if (Test-Path $legacyDir) {
         Write-Host "[!] Removing legacy submodule checkout: $legacyDir" -ForegroundColor Yellow
@@ -152,7 +264,7 @@ function Remove-LegacySubmodule {
 
 # Main installation flow
 function Main {
-    Remove-LegacySubmodule
+    Remove-LegacySubmodule -RepoDir $RepoDir
 
     # Check for existing installation
     $isUpgrade = Check-ExistingClawdbot
@@ -170,11 +282,18 @@ function Main {
         }
     }
 
-    # Step 2: Clawdbot
-    Install-Clawdbot
+    $finalGitDir = $null
 
-    # Step 3: Run doctor for migrations if upgrading
-    if ($isUpgrade) {
+    # Step 2: Clawdbot
+    if ($InstallMethod -eq "git") {
+        $finalGitDir = $GitDir
+        Install-ClawdbotFromGit -RepoDir $GitDir
+    } else {
+        Install-Clawdbot
+    }
+
+    # Step 3: Run doctor for migrations if upgrading or git install
+    if ($isUpgrade -or $InstallMethod -eq "git") {
         Run-Doctor
     }
 
@@ -241,6 +360,12 @@ function Main {
             "All done! I promise to only judge your code a little bit."
         )
         Write-Host (Get-Random -InputObject $completionMessages) -ForegroundColor Gray
+        Write-Host ""
+    }
+
+    if ($InstallMethod -eq "git") {
+        Write-Host "Source checkout: $finalGitDir" -ForegroundColor Cyan
+        Write-Host "Wrapper: $env:USERPROFILE\\.local\\bin\\clawdbot.cmd" -ForegroundColor Cyan
         Write-Host ""
     }
 
