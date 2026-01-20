@@ -11,6 +11,7 @@ set "NO_ONBOARD=0"
 set "NO_GIT_UPDATE=0"
 set "DRY_RUN=0"
 set "TAG_SET=0"
+set "INSTALL_PS1_URL="
 
 :parse_args
 if "%~1"=="" goto :args_done
@@ -61,7 +62,10 @@ if %ERRORLEVEL% neq 0 (
 
 set "TMP=%TEMP%\clawdbot-install.ps1"
 REM TMP may include spaces; always quote "%TMP%" when used.
-curl -fsSL "https://clawd.bot/install.ps1" -o "%TMP%"
+if not "%CLAWDBOT_INSTALL_PS1_URL%"=="" set "INSTALL_PS1_URL=%CLAWDBOT_INSTALL_PS1_URL%"
+if "%INSTALL_PS1_URL%"=="" set "INSTALL_PS1_URL=https://clawd.bot/install.ps1"
+
+curl -fsSL "%INSTALL_PS1_URL%" -o "%TMP%"
 if %ERRORLEVEL% neq 0 (
   echo Failed to download install.ps1 >&2
   exit /b 1
