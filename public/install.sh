@@ -1100,7 +1100,28 @@ EOF
         echo -e "Installed from source. To update later, run: ${INFO}clawdbot update --restart${NC}"
         echo -e "Switch to global install later: ${INFO}curl -fsSL --proto '=https' --tlsv1.2 https://clawd.bot/install.sh | bash -s -- --install-method npm${NC}"
     elif [[ "$is_upgrade" == "true" ]]; then
-        echo -e "Upgrade complete. Run ${INFO}clawdbot doctor${NC} to check for additional migrations."
+        echo -e "Upgrade complete."
+        if [[ -r /dev/tty && -w /dev/tty ]]; then
+            local claw="${CLAWDBOT_BIN:-}"
+            if [[ -z "$claw" ]]; then
+                claw="$(resolve_clawdbot_bin || true)"
+            fi
+            if [[ -z "$claw" ]]; then
+                echo -e "${WARN}→${NC} Skipping doctor: ${INFO}clawdbot${NC} not on PATH yet."
+                warn_clawdbot_not_found
+                return 0
+            fi
+            echo -e "Running ${INFO}clawdbot doctor${NC}..."
+            if CLAWDBOT_UPDATE_IN_PROGRESS=1 "$claw" doctor </dev/tty; then
+                echo -e "Updating plugins (${INFO}clawdbot plugins update --all${NC})..."
+                CLAWDBOT_UPDATE_IN_PROGRESS=1 "$claw" plugins update --all || true
+            else
+                echo -e "${WARN}→${NC} Doctor failed; skipping plugin updates."
+            fi
+        else
+            echo -e "${WARN}→${NC} No TTY available; skipping doctor."
+            echo -e "Run ${INFO}clawdbot doctor${NC}, then ${INFO}clawdbot plugins update --all${NC}."
+        fi
     else
         if [[ "$NO_ONBOARD" == "1" ]]; then
             echo -e "Skipping onboard (requested). Run ${INFO}clawdbot onboard${NC} later."
