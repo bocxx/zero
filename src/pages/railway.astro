@@ -1,0 +1,230 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const DEPLOY_URL = 'https://railway.com/deploy/clawdbot-railway-template';
+---
+
+<Layout
+  title="Deploy Clawdbot on Railway"
+  description="One-click deploy Clawdbot on Railway with a browser-based setup wizard."
+>
+  <div class="stars"></div>
+  <div class="nebula"></div>
+
+  <main class="container">
+    <header class="page-hero">
+      <h1>Deploy Clawdbot on Railway</h1>
+      <p class="subtitle">
+        Run your own Clawdbot on a cheap VPS-like platform with a persistent volume, a friendly
+        <code>/setup</code> wizard, and chat integrations (Telegram, Discord, Slack).
+      </p>
+
+      <div class="cta-row">
+        <a class="btn primary" href={DEPLOY_URL} target="_blank" rel="noreferrer">Deploy on Railway</a>
+        <a class="btn" href="https://docs.railway.com/guides/public-networking" target="_blank" rel="noreferrer">
+          Railway networking docs
+        </a>
+      </div>
+
+      <p class="muted">After deploy, open <code>https://&lt;your-domain&gt;/setup</code> to finish onboarding.</p>
+    </header>
+
+    <section class="grid">
+      <div class="card">
+        <h2>What this template does</h2>
+        <ul>
+          <li>Deploys a Clawdbot Gateway + Control UI behind Railway HTTP Proxy</li>
+          <li>Provides a password-protected setup wizard at <code>/setup</code> (no terminal commands)</li>
+          <li>Mounts a Railway Volume at <code>/data</code> for persistence (config, credentials, sessions, workspace)</li>
+          <li>Lets you export a backup to migrate off Railway later</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>Required setup on Railway</h2>
+        <ol>
+          <li><strong>Public Networking</strong>: enable <strong>HTTP Proxy</strong> (port <code>8080</code>).</li>
+          <li><strong>Volume</strong>: attach a volume mounted at <code>/data</code>.</li>
+          <li><strong>Variables</strong>:
+            <ul>
+              <li><code>SETUP_PASSWORD</code> (required)</li>
+              <li><code>CLAWDBOT_STATE_DIR=/data/.clawdbot</code> (recommended)</li>
+              <li><code>CLAWDBOT_WORKSPACE_DIR=/data/workspace</code> (recommended)</li>
+              <li><code>CLAWDBOT_GATEWAY_TOKEN</code> (recommended; treat as an admin secret)</li>
+            </ul>
+          </li>
+        </ol>
+      </div>
+
+      <div class="card">
+        <h2>Chat tokens (so you don’t scramble)</h2>
+
+        <h3>Telegram bot token</h3>
+        <ol>
+          <li>Open Telegram and message <code>@BotFather</code></li>
+          <li>Run <code>/newbot</code> and follow the prompts</li>
+          <li>Copy the token (looks like <code>123456789:AA...</code>)</li>
+          <li>Paste it into <code>/setup</code></li>
+        </ol>
+
+        <h3>Discord bot token</h3>
+        <ol>
+          <li>Open the Discord Developer Portal: <a href="https://discord.com/developers/applications" target="_blank" rel="noreferrer">discord.com/developers/applications</a></li>
+          <li>Create a <strong>New Application</strong></li>
+          <li>Open the <strong>Bot</strong> tab → <strong>Add Bot</strong></li>
+          <li>Copy the <strong>Bot Token</strong> and paste it into <code>/setup</code></li>
+          <li>Invite the bot to your server (OAuth2 URL Generator; scopes: <code>bot</code>, <code>applications.commands</code>)</li>
+        </ol>
+
+        <p class="muted">
+          Tip: if DMs are set to <code>pairing</code>, you’ll see a pairing code in chat and approve it in <code>/setup</code>.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2>After deployment</h2>
+        <ul>
+          <li>Control UI: <code>/clawdbot</code></li>
+          <li>Setup wizard: <code>/setup</code></li>
+          <li>Backup export: <code>/setup/export</code> (downloads a <code>.tar.gz</code> of state + workspace)</li>
+        </ul>
+        <p class="muted">
+          Railway deploys are immutable; your state persists because it lives on the volume.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <style>
+    .container {
+      width: min(1100px, 92vw);
+      margin: 0 auto;
+      padding: 5rem 0 6rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .page-hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.1rem, 4vw, 3.2rem);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+    }
+
+    .subtitle {
+      color: var(--text-secondary);
+      max-width: 70ch;
+      margin-bottom: 1.25rem;
+      font-size: 1.05rem;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.95em;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-subtle);
+      padding: 0.1rem 0.35rem;
+      border-radius: 0.5rem;
+    }
+
+    .muted {
+      color: var(--text-muted);
+      margin-top: 0.75rem;
+    }
+
+    .cta-row {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin: 1.25rem 0 0.5rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.8rem 1.1rem;
+      border-radius: 0.9rem;
+      border: 1px solid var(--border-subtle);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-primary);
+      text-decoration: none;
+      font-weight: 700;
+      transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      border-color: rgba(255, 77, 77, 0.35);
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    .btn.primary {
+      border-color: rgba(0, 229, 204, 0.35);
+      background: linear-gradient(135deg, rgba(0, 229, 204, 0.22), rgba(255, 77, 77, 0.16));
+    }
+
+    .grid {
+      margin-top: 2.25rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+
+    .card {
+      background: rgba(17, 24, 39, 0.55);
+      border: 1px solid var(--border-subtle);
+      border-radius: 1.25rem;
+      padding: 1.25rem;
+      backdrop-filter: blur(8px);
+    }
+
+    .card h2 {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .card h3 {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      margin: 1rem 0 0.5rem;
+      color: var(--text-primary);
+    }
+
+    .card ul, .card ol {
+      margin-left: 1.25rem;
+      color: var(--text-secondary);
+    }
+
+    .card li { margin: 0.35rem 0; }
+
+    /* subtle background borrowed from home page */
+    .stars {
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.25), transparent),
+        radial-gradient(1px 1px at 200px 150px, rgba(255,255,255,0.18), transparent),
+        radial-gradient(1px 1px at 300px 250px, rgba(255,255,255,0.14), transparent),
+        radial-gradient(2px 2px at 400px 100px, rgba(255,255,255,0.22), transparent);
+      background-size: 500px 500px;
+      opacity: 0.55;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .nebula {
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(0, 229, 204, 0.12), transparent 45%),
+        radial-gradient(circle at 80% 30%, rgba(255, 77, 77, 0.10), transparent 50%),
+        radial-gradient(circle at 50% 80%, rgba(20, 184, 166, 0.08), transparent 55%);
+      pointer-events: none;
+      z-index: 1;
+      mix-blend-mode: screen;
+    }
+  </style>
+</Layout>
