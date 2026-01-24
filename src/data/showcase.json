@@ -660,5 +660,15 @@
     "images": [
       "https://pbs.twimg.com/media/G_VC_k6bAAQNfJ0.jpg"
     ]
+  },
+  {
+    "id": "2014797672419340435",
+    "author": "nateliason",
+    "quote": "My new favorite way to work with Clawdbot:\n\n1. Tell it we're working on app improvements, it should just take notes\n2. Run through user flows, send screenshots with notes as I find issues\n3. It builds a list of work, adds its own hypotheses\n4. Writes up a full report on what to do\n5. I say \"Go\" and it kicks off Codex agents to attack the different pieces, opening separate PRs\n6. Claude reviews & improves the PRs on Github\n7. Clawd makes a doc of everything we did + what to test\n8. Next time I test, I start with that list to make sure everything worked",
+    "category": "developer",
+    "likes": 239,
+    "images": [
+      "https://pbs.twimg.com/media/G_X_aoQWsAA7mMv.jpg"
+    ]
   }
 ]
