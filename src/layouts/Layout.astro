@@ -18,14 +18,14 @@ const { title, description = "ClawsHub — In a world gripped by AI’s claws." 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="canonical" href="https://openclaw.ai/" />
+    <link rel="canonical" href="https://clawshub.com/" />
 
     <!-- Open Graph -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://openclaw.ai/" />
-    <meta property="og:image" content="https://openclaw.ai/og-image.png" />
+    <meta property="og:url" content="https://clawshub.com/" />
+    <meta property="og:image" content="https://clawshub.com/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
 
@@ -33,7 +33,7 @@ const { title, description = "ClawsHub — In a world gripped by AI’s claws." 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content="https://openclaw.ai/og-image.png" />
+    <meta name="twitter:image" content="https://clawshub.com/og-image.png" />
 
     <!-- Fonts: Clash Display + Satoshi from Fontshare -->
     <link rel="preconnect" href="https://api.fontshare.com" />
@@ -46,26 +46,7 @@ const { title, description = "ClawsHub — In a world gripped by AI’s claws." 
     <title>{title}</title>
 
     <!-- Design System -->
-    <link rel="stylesheet" href="/src/styles/theme.css" />
-    <link rel="stylesheet" href="/src/styles/components.css" />
-    <link rel="stylesheet" href="/src/styles/claws.css" />
-
-    <style is:global>
-      /* Legacy variable aliases for backwards compatibility */
-      :root {
-        --coral-bright: var(--color-primary-bright);
-        --coral-mid: var(--color-primary-mid);
-        --coral-dark: var(--color-primary-dark);
-        --cyan-bright: var(--color-secondary-bright);
-        --cyan-mid: var(--color-secondary-mid);
-        --cyan-glow: var(--color-secondary-glow);
-        --border-accent: color-mix(
-          in srgb,
-          var(--color-primary-bright) 40%,
-          transparent
-        );
-      }
-    </style>
+    <link rel="stylesheet" href="/src/styles/main.css" />
   </head>
   <body>
     <slot />
