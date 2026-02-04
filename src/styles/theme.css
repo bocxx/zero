@@ -9,36 +9,57 @@
      ============================================ */
   
   /* Background Colors */
-  --bg-deep: #050810;
-  --bg-surface: #0a0f1a;
-  --bg-elevated: #111827;
+  --bg-deep: #04060d;
+  --bg-surface: #090f1b;
+  --bg-elevated: #111a2b;
+  --bg-panel: #162137;
+  --bg-glass: rgba(10, 16, 28, 0.72);
+  --bg-overlay: rgba(4, 6, 13, 0.72);
   
-  /* Primary Brand Colors - Electric Violet */
-  --color-primary-bright: #a855f7;
-  --color-primary-mid: #9333ea;
-  --color-primary-dark: #6b21a8;
-  --color-primary-glow: rgba(168, 85, 247, 0.4);
+  /* Primary Brand Colors - Claw Coral */
+  --color-primary-bright: #ff4d6d;
+  --color-primary-mid: #ff2151;
+  --color-primary-dark: #c10f3f;
+  --color-primary-glow: rgba(255, 77, 109, 0.45);
   
-  /* Secondary Brand Colors - Neon Lime */
-  --color-secondary-bright: #84cc16;
-  --color-secondary-mid: #65a30d;
-  --color-secondary-dark: #4d7c0f;
-  --color-secondary-glow: rgba(132, 204, 22, 0.4);
+  /* Secondary Brand Colors - Abyssal Cyan */
+  --color-secondary-bright: #16f2d7;
+  --color-secondary-mid: #0fb8c8;
+  --color-secondary-dark: #0b839c;
+  --color-secondary-glow: rgba(22, 242, 215, 0.35);
+  
+  /* Support & Neutral Colors */
+  --color-tertiary-bright: #6d8bff;
+  --color-tertiary-dark: #3a4bb3;
+  --color-neutral-100: #f5f7ff;
+  --color-neutral-300: #c7d0e8;
+  --color-neutral-500: #8d9bc0;
+  --color-neutral-700: #4c5675;
+  --color-neutral-900: #1f2537;
   
   /* Text Colors */
-  --text-primary: #f0f4ff;
-  --text-secondary: #8892b0;
-  --text-muted: #5a6480;
+  --text-primary: #f4f7ff;
+  --text-secondary: #9aa6ca;
+  --text-muted: #5c6788;
+  --text-inverse: #05070e;
   
   /* Border Colors */
-  --border-subtle: rgba(136, 146, 176, 0.15);
-  --border-accent: rgba(168, 85, 247, 0.3);
+  --border-subtle: rgba(154, 166, 202, 0.16);
+  --border-strong: rgba(244, 247, 255, 0.12);
+  --border-accent: color-mix(in srgb, var(--color-primary-bright) 40%, transparent);
   
   /* Semantic Colors */
-  --color-success: var(--color-secondary-bright);
-  --color-warning: #fbbf24;
-  --color-error: #ef4444;
-  --color-info: var(--color-primary-bright);
+  --color-success: #2dd4bf;
+  --color-warning: #facc15;
+  --color-error: #f87171;
+  --color-info: #38bdf8;
+  
+  /* Brand Gradients */
+  --gradient-claw: linear-gradient(135deg, var(--color-primary-bright) 0%, var(--color-secondary-bright) 100%);
+  --gradient-midnight: linear-gradient(180deg, rgba(9, 15, 27, 0.9) 0%, rgba(4, 6, 13, 0.95) 100%);
+  --gradient-sheen: radial-gradient(circle at 20% 20%, rgba(255, 77, 109, 0.35), transparent 55%),
+                     radial-gradient(circle at 80% 30%, rgba(22, 242, 215, 0.28), transparent 60%),
+                     radial-gradient(circle at 50% 80%, rgba(109, 139, 255, 0.24), transparent 65%);
   
   /* ============================================
      TYPOGRAPHY SYSTEM
@@ -101,20 +122,27 @@
      SHADOWS
      ============================================ */
   
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
-  --shadow-glow-primary: 0 0 20px var(--color-primary-glow);
-  --shadow-glow-secondary: 0 0 20px var(--color-secondary-glow);
+  --shadow-sm: 0 1px 2px rgba(5, 7, 15, 0.3);
+  --shadow-md: 0 8px 20px rgba(4, 7, 15, 0.35);
+  --shadow-lg: 0 18px 40px rgba(4, 7, 15, 0.45);
+  --shadow-xl: 0 30px 60px rgba(4, 7, 15, 0.55);
+  --shadow-inner: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  --shadow-glow-primary: 0 0 45px color-mix(in srgb, var(--color-primary-bright) 35%, transparent);
+  --shadow-glow-secondary: 0 0 45px color-mix(in srgb, var(--color-secondary-bright) 30%, transparent);
+  --shadow-glow-tertiary: 0 0 45px color-mix(in srgb, var(--color-tertiary-bright) 32%, transparent);
   
   /* ============================================
      TRANSITIONS
      ============================================ */
   
-  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast: 150ms cubic-bezier(0.5, 0, 0.2, 1);
+  --transition-base: 240ms cubic-bezier(0.45, 0, 0.2, 1);
+  --transition-slow: 360ms cubic-bezier(0.35, 0, 0.25, 1);
+  
+  /* Focus Rings */
+  --ring-primary: 0 0 0 3px color-mix(in srgb, var(--color-primary-bright) 35%, transparent);
+  --ring-secondary: 0 0 0 3px color-mix(in srgb, var(--color-secondary-bright) 30%, transparent);
+  --ring-tertiary: 0 0 0 3px color-mix(in srgb, var(--color-tertiary-bright) 28%, transparent);
   
   /* ============================================
      Z-INDEX SCALE
@@ -145,7 +173,10 @@ html {
 
 body {
   font-family: var(--font-body);
-  background: var(--bg-deep);
+  background-color: var(--bg-deep);
+  background-image: var(--gradient-midnight), var(--gradient-sheen);
+  background-attachment: fixed;
+  background-size: cover;
   color: var(--text-primary);
   line-height: var(--leading-normal);
   min-height: 100vh;
@@ -177,8 +208,8 @@ body {
 
 /* Custom focus state */
 :focus-visible {
-  outline: 3px solid var(--color-secondary-bright);
-  outline-offset: 4px;
+  outline: none;
+  box-shadow: var(--ring-secondary);
   border-radius: var(--radius-sm);
 }
 

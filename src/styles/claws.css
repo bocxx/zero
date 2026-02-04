@@ -60,25 +60,51 @@
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
 }
 
 @keyframes blink {
-  0%, 90%, 100% { opacity: 1; }
-  95% { opacity: 0.3; }
+  0%,
+  90%,
+  100% {
+    opacity: 1;
+  }
+  95% {
+    opacity: 0.3;
+  }
 }
 
 @keyframes wiggle {
-  0%, 100% { transform: rotate(0deg); }
-  25% { transform: rotate(-3deg); }
-  75% { transform: rotate(3deg); }
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-3deg);
+  }
+  75% {
+    transform: rotate(3deg);
+  }
 }
 
 @keyframes clawSnap {
-  0%, 85%, 100% { transform: rotate(0deg); }
-  90% { transform: rotate(-8deg); }
-  95% { transform: rotate(0deg); }
+  0%,
+  85%,
+  100% {
+    transform: rotate(0deg);
+  }
+  90% {
+    transform: rotate(-8deg);
+  }
+  95% {
+    transform: rotate(0deg);
+  }
 }
 
 /* Hero title */
@@ -92,7 +118,12 @@
 }
 
 .title-main {
-  background: linear-gradient(135deg, var(--text-primary) 0%, var(--color-primary-bright) 50%, var(--color-secondary-bright) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--text-primary) 0%,
+    var(--color-primary-bright) 50%,
+    var(--color-secondary-bright) 100%
+  );
   background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -101,8 +132,13 @@
 }
 
 @keyframes gradientShift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 .tagline {
@@ -123,9 +159,16 @@
 }
 
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-2px); }
-  75% { transform: translateX(2px); }
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-2px);
+  }
+  75% {
+    transform: translateX(2px);
+  }
 }
 
 .description {
@@ -249,13 +292,21 @@
 }
 
 @keyframes scroll-left {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 @keyframes scroll-right {
-  from { transform: translateX(-50%); }
-  to { transform: translateX(0); }
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
 }
 
 .testimonial-card {
@@ -481,7 +532,11 @@
 
 .press-featured {
   border-color: var(--border-accent);
-  background: linear-gradient(135deg, var(--color-primary-glow), rgba(10, 15, 26, 0.7) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-glow),
+    rgba(10, 15, 26, 0.7) 100%
+  );
 }
 
 .press-logo {
@@ -571,17 +626,37 @@
 }
 
 /* Specific CTA hover colors */
-.cta-discord:hover { border-color: #5865F2; box-shadow: 0 12px 40px rgba(88, 101, 242, 0.2); }
-.cta-discord:hover .cta-icon { color: #5865F2; }
+.cta-discord:hover {
+  border-color: #5865f2;
+  box-shadow: 0 12px 40px rgba(88, 101, 242, 0.2);
+}
+.cta-discord:hover .cta-icon {
+  color: #5865f2;
+}
 
-.cta-docs:hover { border-color: var(--color-secondary-bright); box-shadow: 0 12px 40px var(--color-secondary-glow); }
-.cta-docs:hover .cta-icon { color: var(--color-secondary-bright); }
+.cta-docs:hover {
+  border-color: var(--color-secondary-bright);
+  box-shadow: 0 12px 40px var(--color-secondary-glow);
+}
+.cta-docs:hover .cta-icon {
+  color: var(--color-secondary-bright);
+}
 
-.cta-github:hover { border-color: #f0f4ff; box-shadow: 0 12px 40px rgba(240, 244, 255, 0.1); }
-.cta-github:hover .cta-icon { color: #f0f4ff; }
+.cta-github:hover {
+  border-color: #f0f4ff;
+  box-shadow: 0 12px 40px rgba(240, 244, 255, 0.1);
+}
+.cta-github:hover .cta-icon {
+  color: #f0f4ff;
+}
 
-.cta-skills:hover { border-color: #fbbf24; box-shadow: 0 12px 40px rgba(251, 191, 36, 0.15); }
-.cta-skills:hover .cta-icon { color: #fbbf24; }
+.cta-skills:hover {
+  border-color: #fbbf24;
+  box-shadow: 0 12px 40px rgba(251, 191, 36, 0.15);
+}
+.cta-skills:hover .cta-icon {
+  color: #fbbf24;
+}
 
 .cta-label {
   font-family: var(--font-display);
@@ -673,7 +748,11 @@
   padding: var(--space-4) var(--space-6);
   border-radius: var(--radius-lg);
   border: none;
-  background: linear-gradient(135deg, var(--color-primary-bright) 0%, var(--color-primary-dark) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-bright) 0%,
+    var(--color-primary-dark) 100%
+  );
   color: white;
   font-family: var(--font-display);
   font-size: var(--text-base);
@@ -820,9 +899,15 @@
   background: var(--text-muted);
 }
 
-.code-dot:nth-child(1) { background: #ff5f57; }
-.code-dot:nth-child(2) { background: #febc2e; }
-.code-dot:nth-child(3) { background: #28c840; }
+.code-dot:nth-child(1) {
+  background: #ff5f57;
+}
+.code-dot:nth-child(2) {
+  background: #febc2e;
+}
+.code-dot:nth-child(3) {
+  background: #28c840;
+}
 
 /* Mode/PM/OS Switches */
 .mode-switch,

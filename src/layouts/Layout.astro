@@ -4,10 +4,8 @@ interface Props {
   description?: string;
 }
 
-const {
-  title,
-  description = "OpenClaw — The AI that actually does things. Your personal assistant on any platform.",
-} = Astro.props;
+const { title, description = "ClawsHub — In a world gripped by AI’s claws." } =
+  Astro.props;
 ---
 
 <!doctype html>
@@ -50,7 +48,7 @@ const {
     <!-- Design System -->
     <link rel="stylesheet" href="/src/styles/theme.css" />
     <link rel="stylesheet" href="/src/styles/components.css" />
-    <link rel="stylesheet" href="/src/styles/openclaw-components.css" />
+    <link rel="stylesheet" href="/src/styles/claws.css" />
 
     <style is:global>
       /* Legacy variable aliases for backwards compatibility */
@@ -61,7 +59,11 @@ const {
         --cyan-bright: var(--color-secondary-bright);
         --cyan-mid: var(--color-secondary-mid);
         --cyan-glow: var(--color-secondary-glow);
-        --border-accent: var(--border-accent, rgba(168, 85, 247, 0.3));
+        --border-accent: color-mix(
+          in srgb,
+          var(--color-primary-bright) 40%,
+          transparent
+        );
       }
     </style>
   </head>

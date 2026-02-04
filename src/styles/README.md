@@ -1,249 +1,211 @@
 # Design System Documentation
 
-This directory contains the centralized design system for the application, making it easy to maintain consistent styling and quickly update themes.
+The Claws design system centralizes tokens, surfaces, and components so the site stays visually consistent while still feeling alive and sharp.
 
 ## 📁 Structure
 
 ```
 src/styles/
-├── theme.css       # Core design tokens (colors, typography, spacing)
-├── components.css  # Reusable component styles
-└── README.md       # This file
+├── theme.css               # Core design tokens (colors, typography, spacing)
+├── components.css          # Shared UI components & utilities
+├── openclaw-components.css # Product-specific patterns layered on top
+└── README.md               # This file
 ```
 
 ## 🎨 How to Use
 
-### 1. Importing the Design System
+### 1. Importing
 
-The design system is automatically imported in `Layout.astro`:
+`Layout.astro` already loads the theme and component layers:
 
 ```astro
 <link rel="stylesheet" href="/src/styles/theme.css" />
 <link rel="stylesheet" href="/src/styles/components.css" />
+<link rel="stylesheet" href="/src/styles/openclaw-components.css" />
 ```
 
-### 2. Using Design Tokens
+### 2. Tokens First
 
-All design tokens are available as CSS custom properties (variables):
+Grab design tokens via CSS variables—no hard-coded values:
 
 ```css
-.my-element {
+.claw-card {
   /* Colors */
-  color: var(--color-primary-bright);
-  background: var(--bg-elevated);
-  
-  /* Typography */
+  color: var(--text-primary);
+  background: var(--bg-panel);
+
+  /* Type */
   font-family: var(--font-display);
   font-size: var(--text-lg);
-  font-weight: var(--font-semibold);
-  
-  /* Spacing */
+
+  /* Layout */
   padding: var(--space-4);
-  margin-bottom: var(--space-6);
-  
-  /* Border Radius */
-  border-radius: var(--radius-lg);
-  
-  /* Transitions */
-  transition: all var(--transition-base);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+
+  /* Motion */
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
 }
 ```
 
-### 3. Using Component Classes
+### 3. Drop-in Components
 
-Apply pre-built component classes directly in your HTML:
+Use the pre-built classes to compose layouts quickly:
 
 ```astro
 <!-- Buttons -->
-<button class="btn btn-primary">Primary Button</button>
-<button class="btn btn-secondary">Secondary Button</button>
-<button class="btn btn-outline">Outline Button</button>
-
-<!-- Cards -->
-<div class="card card-interactive">
-  <h3>Card Title</h3>
-  <p>Card content</p>
+<div class="grid grid-4">
+  <button class="btn btn-primary">Deploy Agent</button>
+  <button class="btn btn-secondary">Join Discord</button>
+  <button class="btn btn-outline">Docs</button>
+  <button class="btn btn-destructive">Shut Down</button>
 </div>
 
-<!-- Badges -->
-<span class="badge badge-primary">New</span>
+<!-- Top Navigation -->
+<nav class="topbar">
+  <a class="brand" href="#">🦞 Claws</a>
+  <div class="nav-links">
+    <a class="nav-link is-active" href="#">Overview</a>
+    <a class="nav-link" href="#">Channels</a>
+    <a class="nav-link" href="#">Skills</a>
+  </div>
+  <button class="btn btn-secondary btn-sm">Launch App</button>
+</nav>
 
-<!-- Layout -->
-<div class="container">
-  <section class="section">
-    <div class="section-header">
-      <h2 class="section-title">
-        <span class="section-title-accent">⟩</span> Title
-      </h2>
-    </div>
-    <div class="grid grid-3">
-      <!-- Grid items -->
-    </div>
-  </section>
+<!-- Tabs -->
+<div class="tabs">
+  <div class="tab-list">
+    <button class="tab is-active">Setup</button>
+    <button class="tab">Automation</button>
+    <button class="tab">Security</button>
+  </div>
+  <div class="tab-panel">
+    <p class="media-subtitle">Guided instructions render here.</p>
+  </div>
+</div>
+
+<!-- Stats -->
+<div class="stat-group grid grid-3">
+  <div class="stat-card">
+    <p class="stat-label">Active Agents</p>
+    <p class="stat-value">42</p>
+    <p class="stat-trend">▲ 12% WoW</p>
+  </div>
 </div>
 ```
 
 ## 🔧 Customizing the Theme
 
-### Changing Colors
+### Update the Claws Palette
 
-To update the color scheme, edit `src/styles/theme.css`:
+`src/styles/theme.css` holds all core tokens:
 
 ```css
 :root {
-  /* Primary Brand Colors */
-  --color-primary-bright: #a855f7;  /* Main accent color */
-  --color-primary-mid: #9333ea;
-  --color-primary-dark: #6b21a8;
-  
-  /* Secondary Brand Colors */
-  --color-secondary-bright: #84cc16;
-  --color-secondary-mid: #65a30d;
-  --color-secondary-dark: #4d7c0f;
+  /* Primary Claw Coral */
+  --color-primary-bright: #ff4d6d;
+  --color-primary-mid: #ff2151;
+  --color-primary-dark: #c10f3f;
+
+  /* Secondary Abyssal Cyan */
+  --color-secondary-bright: #16f2d7;
+  --color-secondary-mid: #0fb8c8;
+  --color-secondary-dark: #0b839c;
 }
 ```
 
-**All components automatically update** to use the new colors!
+All components pick up new colors automatically.
 
-### Example Color Schemes
+### Alternate Palettes
 
-#### Ocean Blue & Coral
 ```css
---color-primary-bright: #06b6d4;  /* Cyan */
---color-primary-mid: #0891b2;
---color-primary-dark: #0e7490;
+/* Deep Current */
+--color-primary-bright: #ff6f61;
+--color-primary-mid: #f94144;
+--color-primary-dark: #a4161a;
+--color-secondary-bright: #4d96ff;
+--color-secondary-mid: #3a6de5;
+--color-secondary-dark: #274690;
 
---color-secondary-bright: #f97316; /* Orange */
---color-secondary-mid: #ea580c;
---color-secondary-dark: #c2410c;
+/* Tidal Emerald */
+--color-primary-bright: #1dd3b0;
+--color-primary-mid: #19b79c;
+--color-primary-dark: #12876f;
+--color-secondary-bright: #f9a03f;
+--color-secondary-mid: #f6871f;
+--color-secondary-dark: #c86b11;
 ```
 
-#### Forest Green & Gold
-```css
---color-primary-bright: #10b981;  /* Emerald */
---color-primary-mid: #059669;
---color-primary-dark: #047857;
-
---color-secondary-bright: #f59e0b; /* Amber */
---color-secondary-mid: #d97706;
---color-secondary-dark: #b45309;
-```
-
-#### Royal Purple & Rose
-```css
---color-primary-bright: #8b5cf6;  /* Violet */
---color-primary-mid: #7c3aed;
---color-primary-dark: #6d28d9;
-
---color-secondary-bright: #ec4899; /* Pink */
---color-secondary-mid: #db2777;
---color-secondary-dark: #be185d;
-```
-
-## 📚 Design Token Reference
+## 📚 Token Reference
 
 ### Colors
 
 | Token | Purpose | Default |
 |-------|---------|---------|
-| `--color-primary-bright` | Primary accent (buttons, links) | `#a855f7` |
-| `--color-primary-mid` | Primary hover states | `#9333ea` |
-| `--color-primary-dark` | Primary active states | `#6b21a8` |
-| `--color-secondary-bright` | Secondary accent | `#84cc16` |
-| `--color-secondary-mid` | Secondary hover | `#65a30d` |
-| `--color-secondary-dark` | Secondary active | `#4d7c0f` |
-| `--text-primary` | Main text | `#f0f4ff` |
-| `--text-secondary` | Secondary text | `#8892b0` |
-| `--text-muted` | Muted text | `#5a6480` |
+| `--color-primary-bright` | Hero accents, primary buttons | `#ff4d6d` |
+| `--color-primary-mid` | Hover states | `#ff2151` |
+| `--color-primary-dark` | Active states, shadows | `#c10f3f` |
+| `--color-secondary-bright` | Secondary actions, tabs | `#16f2d7` |
+| `--color-tertiary-bright` | Charts, supporting highlights | `#6d8bff` |
+| `--bg-deep` | Page background | `#04060d` |
+| `--bg-panel` | Elevated surfaces | `#162137` |
+| `--bg-glass` | Frosted overlays | `rgba(10, 16, 28, 0.72)` |
+| `--text-primary` | Main text | `#f4f7ff` |
+| `--text-secondary` | Secondary copy | `#9aa6ca` |
+| `--border-subtle` | Low emphasis borders | `rgba(154, 166, 202, 0.16)` |
 
 ### Typography
 
 | Token | Size | Usage |
 |-------|------|-------|
-| `--text-xs` | 12px | Small labels |
+| `--text-xs` | 12px | Labels, stats |
 | `--text-sm` | 14px | Secondary text |
-| `--text-base` | 16px | Body text |
-| `--text-lg` | 18px | Large body |
-| `--text-xl` | 20px | Subtitles |
-| `--text-2xl` | 24px | Section titles |
-| `--text-3xl` | 30px | Page titles |
-| `--text-4xl` | 36px | Hero titles |
-| `--text-5xl` | 48px | Large hero |
+| `--text-base` | 16px | Body copy |
+| `--text-lg` | 18px | Lead paragraphs |
+| `--text-2xl` | 24px | Section headings |
+| `--text-3xl` | 30px | Page headings |
+| `--text-5xl` | 48px | Hero headlines |
 
 ### Spacing
 
-| Token | Size | Common Usage |
-|-------|------|--------------|
-| `--space-1` | 4px | Tight spacing |
-| `--space-2` | 8px | Small gaps |
-| `--space-3` | 12px | Default gaps |
-| `--space-4` | 16px | Medium spacing |
-| `--space-6` | 24px | Large spacing |
-| `--space-8` | 32px | Section spacing |
-| `--space-12` | 48px | Large sections |
+| Token | Size | Usage |
+|-------|------|-------|
+| `--space-1` | 4px | Tight gutters |
+| `--space-2` | 8px | Chips, pills |
+| `--space-3` | 12px | Form controls |
+| `--space-4` | 16px | Default padding |
+| `--space-6` | 24px | Section rhythm |
+| `--space-8` | 32px | Feature blocks |
+| `--space-16` | 64px | Hero spacing |
 
-## 🎯 Component Classes
+## 🧱 Component Cheat Sheet
 
-### Buttons
-- `.btn` - Base button styles
-- `.btn-primary` - Primary action button
-- `.btn-secondary` - Secondary action button
-- `.btn-outline` - Outline button
-- `.btn-ghost` - Ghost button
-- `.btn-sm` / `.btn-lg` - Size variants
+**Buttons** – `.btn`, `.btn-primary`, `.btn-secondary`, `.btn-tertiary`, `.btn-outline`, `.btn-ghost`, `.btn-destructive`, `.btn-sm`, `.btn-lg`
 
-### Cards
-- `.card` - Base card styles
-- `.card-elevated` - Elevated background
-- `.card-interactive` - Adds pointer cursor
+**Cards & Surfaces** – `.card`, `.card-elevated`, `.card-accent`, `.card-outline`, `.surface`, `.surface-glass`, `.surface-gradient`, `.divider`
 
-### Layout
-- `.container` - Main content container (860px max)
-- `.container-wide` - Wide container (1200px max)
-- `.container-narrow` - Narrow container (640px max)
-- `.grid` / `.grid-2` / `.grid-3` / `.grid-4` - Responsive grids
+**Forms** – `.field-label`, `.field-description`, `.input`, `.textarea`, `.select`, `.input-group`, `.input-addon`, `.toggle`
 
-### Effects
-- `.glass` - Glass morphism effect
-- `.glow-primary` - Primary color glow
-- `.animate-fadeInUp` - Fade in animation
-- `.starfield` - Starfield background
-- `.nebula` - Nebula gradient background
+**Navigation** – `.topbar`, `.brand`, `.nav-links`, `.nav-link`, `.tabs`, `.tab-list`, `.tab`, `.tab-panel`
 
-## 🔄 Migration Guide
+**Feedback & Data** – `.badge`, `.alert`, `.stat-group`, `.stat-card`, `.table`, `.timeline`, `.toast`
 
-If you have existing components with inline styles, migrate them to use the design system:
+**Overlays & Media** – `.modal-backdrop`, `.modal`, `.tooltip`, `.avatar`, `.avatar-stack`, `.media-object`
 
-### Before:
-```astro
-<button style="background: #a855f7; padding: 12px 24px; border-radius: 12px;">
-  Click me
-</button>
-```
+**Effects & Motion** – `.glass`, `.glow-primary`, `.starfield`, `.nebula`, `.animate-fadeInUp`, `.shadow-ring`, `.shadow-bleed`
 
-### After:
-```astro
-<button class="btn btn-primary">
-  Click me
-</button>
-```
+## 🔄 Migration Tips
 
-### Benefits:
-✅ Consistent styling across the app  
-✅ Instant theme changes by updating `theme.css`  
-✅ Better maintainability  
-✅ Smaller bundle size (reused classes)  
-✅ Built-in responsive design  
-✅ Automatic dark mode support  
+- Swap inline styles for token-driven classes (`btn`, `card`, `surface`).
+- Compose surfaces: start with `.card` or `.surface`, then add utilities like `.glass` or `.shadow-bleed`.
+- Prefer `.nav-link.is-active` and `.tab[aria-selected="true"]` for state styling.
+- Keep custom CSS minimal—extend the design system when something repeats.
+- Test accessibility: focus states rely on the new `--ring-*` tokens.
 
-## 🚀 Best Practices
+## 📎 Examples
 
-1. **Always use design tokens** instead of hardcoded values
-2. **Prefer component classes** over custom styles when possible
-3. **Update theme.css** for global changes, not individual components
-4. **Test color changes** with both light and dark text
-5. **Keep custom styles minimal** - extend the design system instead
+- `src/pages/index.astro` – hero, testimonials, quick-start code blocks.
+- `src/pages/showcase.astro` – grid layouts, callouts, badges.
+- `src/pages/integrations.astro` – cards with accent overrides (`--accent`).
 
-## 📖 Examples
-
-See `src/pages/index.astro` for real-world usage examples of the design system.
+Use these pages as live references for combining the Claws design system with product-specific flavor.
