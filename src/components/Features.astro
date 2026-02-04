@@ -1,0 +1,99 @@
+---
+import Icon from "./Icon.astro";
+---
+
+<section class="features">
+  <h2 class="section-title">
+    <span class="claw-accent">⟩</span> What It Does
+  </h2>
+  <div class="features-grid">
+    <a
+      href="https://docs.clawshub.com/getting-started"
+      target="_blank"
+      rel="noopener"
+      class="feature-card"
+    >
+      <div class="feature-icon">
+        <Icon icon="lucide:home" color="var(--coral-bright)" size={28} />
+      </div>
+      <h3 class="feature-title">Runs on Your Machine</h3>
+      <p class="feature-desc">
+        Mac, Windows, or Linux. Anthropic, OpenAI, or local models. Private by
+        default—your data stays yours.
+      </p>
+    </a>
+    <a href="/integrations" class="feature-card">
+      <div class="feature-icon">
+        <Icon
+          icon="lucide:message-circle"
+          color="var(--coral-bright)"
+          size={28}
+        />
+      </div>
+      <h3 class="feature-title">Any Chat App</h3>
+      <p class="feature-desc">
+        Talk to it on WhatsApp, Telegram, Discord, Slack, Signal, or iMessage.
+        Works in DMs and group chats.
+      </p>
+    </a>
+    <a
+      href="https://docs.clawshub.com/session"
+      target="_blank"
+      rel="noopener"
+      class="feature-card"
+    >
+      <div class="feature-icon">
+        <Icon icon="lucide:brain" color="var(--coral-bright)" size={28} />
+      </div>
+      <h3 class="feature-title">Persistent Memory</h3>
+      <p class="feature-desc">
+        Remembers you and becomes uniquely yours. Your preferences, your
+        context, your AI.
+      </p>
+    </a>
+    <a
+      href="https://docs.clawshub.com/browser"
+      target="_blank"
+      rel="noopener"
+      class="feature-card"
+    >
+      <div class="feature-icon">
+        <Icon icon="lucide:globe" color="var(--coral-bright)" size={28} />
+      </div>
+      <h3 class="feature-title">Browser Control</h3>
+      <p class="feature-desc">
+        It can browse the web, fill forms, and extract data from any site.
+      </p>
+    </a>
+    <a
+      href="https://docs.clawshub.com/bash"
+      target="_blank"
+      rel="noopener"
+      class="feature-card"
+    >
+      <div class="feature-icon">
+        <Icon icon="lucide:terminal" color="var(--coral-bright)" size={28} />
+      </div>
+      <h3 class="feature-title">Full System Access</h3>
+      <p class="feature-desc">
+        Read and write files, run shell commands, execute scripts. Full access
+        or sandboxed—your choice.
+      </p>
+    </a>
+    <a
+      href="https://docs.clawshub.com/skills"
+      target="_blank"
+      rel="noopener"
+      class="feature-card"
+    >
+      <div class="feature-icon">
+        <Icon icon="lucide:puzzle" color="var(--coral-bright)" size={28} />
+      </div>
+      <h3 class="feature-title">Skills & Plugins</h3>
+      <p class="feature-desc">
+        Extend with community skills or build your own. It can even write its
+        own.
+      </p>
+    </a>
+  </div>
+</section>

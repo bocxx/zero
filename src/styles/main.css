@@ -1,0 +1,176 @@
+/**
+ * ClawsHub Design System
+ * Main entry point for all CSS
+ * 
+ * Architecture:
+ * - Tokens: Design tokens and CSS custom properties
+ * - Animations: Keyframes and animation utilities
+ * - Base: Resets, global styles, and defaults
+ * - Components: Reusable UI components
+ * - Specialized: ClawsHub-specific components
+ * - Utilities: Helper classes and atmospherics
+ * 
+ * @version 2.0.0
+ * @author ClawsHub Team
+ */
+
+/* ============================================
+   CSS LAYERS
+   Establish layer order for cascade management
+   ============================================ */
+
+@layer tokens, animations, reset, base, components, specialized, atmospherics, utilities;
+
+/* ============================================
+   IMPORTS
+   Order matters - layers cascade in order
+   ============================================ */
+
+/* 1. Design Tokens */
+@import url('./00-tokens.css');
+
+/* 2. Animations */
+@import url('./01-animations.css');
+
+/* 3. Base Styles */
+@import url('./02-base.css');
+
+/* 4. Component Library */
+@import url('./03-components.css');
+
+/* 5. Specialized Components */
+@import url('./04-claws-specialized.css');
+
+/* 6. Utilities & Atmospherics */
+@import url('./05-utilities.css');
+
+/* ============================================
+   LEGACY SUPPORT
+   Backwards compatibility aliases
+   ============================================ */
+
+:root {
+  /* Old color variable names */
+  --coral-bright: var(--primary-bright);
+  --coral-mid: var(--primary-mid);
+  --coral-dark: var(--primary-dark);
+  --cyan-bright: var(--secondary-bright);
+  --cyan-mid: var(--secondary-mid);
+  --cyan-dark: var(--secondary-dark);
+  --cyan-glow: var(--glow-secondary);
+  
+  /* Deprecated spacing (use modern scale instead) */
+  --space-xs: var(--space-1);
+  --space-sm: var(--space-2);
+  --space-md: var(--space-4);
+  --space-lg: var(--space-6);
+  --space-xl: var(--space-8);
+}
+
+/* ============================================
+   DEBUG MODE (optional)
+   Uncomment to visualize layout issues
+   ============================================ */
+
+/* 
+@layer utilities {
+  .debug * {
+    outline: 1px solid rgba(255, 0, 0, 0.3);
+  }
+  
+  .debug *:hover {
+    outline: 2px solid rgba(255, 0, 0, 0.8);
+  }
+}
+*/
+
+/* ============================================
+   PRINT OPTIMIZATION
+   ============================================ */
+
+@media print {
+  @page {
+    margin: 2cm;
+  }
+  
+  /* Hide non-essential elements */
+  .nebula,
+  .starfield,
+  .stars,
+  .gradient-orb,
+  .newsletter,
+  .footer-nav,
+  nav {
+    display: none !important;
+  }
+  
+  /* Optimize components for print */
+  .card,
+  .btn,
+  .pill,
+  .badge {
+    border: 1px solid #000 !important;
+    box-shadow: none !important;
+    background: #fff !important;
+    color: #000 !important;
+  }
+}
+
+/* ============================================
+   DEVELOPMENT HELPERS
+   ============================================ */
+
+/* Show grid overlay (add .show-grid to body) */
+.show-grid::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(255, 0, 0, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 0, 0, 0.1) 1px, transparent 1px);
+  background-size: 8px 8px;
+  pointer-events: none;
+  z-index: var(--z-max);
+}
+
+/* Accessibility warning for missing alt text */
+img:not([alt]) {
+  outline: 5px solid red;
+}
+
+/* ============================================
+   BROWSER-SPECIFIC FIXES
+   ============================================ */
+
+/* Safari specific */
+@supports (-webkit-hyphens: none) {
+  /* Fix backdrop-filter in Safari */
+  .glass,
+  .card,
+  .modal {
+    -webkit-backdrop-filter: blur(16px);
+  }
+}
+
+/* Firefox specific */
+@-moz-document url-prefix() {
+  /* Optimize scrolling in Firefox */
+  * {
+    scroll-behavior: smooth;
+  }
+}
+
+/* ============================================
+   PERFORMANCE MONITORING
+   Add to body to enable performance hints
+   ============================================ */
+
+.perf-hints [class*="animate-"],
+.perf-hints .will-change-transform,
+.perf-hints .will-change-opacity {
+  outline: 2px dashed rgba(0, 255, 0, 0.5);
+}
+
+/* ============================================
+   END OF MASTER STYLESHEET
+   ============================================ */

@@ -1,0 +1,313 @@
+/**
+ * Design Tokens
+ * Core design values - colors, spacing, typography, effects
+ * 
+ * Using modern CSS with oklch colors for better gradients
+ * and perceptually uniform color manipulation
+ */
+
+@layer tokens {
+  :root {
+    /* ============================================
+       COLOR SYSTEM - Using OKLCH for better gradients
+       ============================================ */
+    
+    /* Background Palette */
+    --bg-deep: oklch(10% 0.02 260);
+    --bg-surface: oklch(14% 0.025 260);
+    --bg-elevated: oklch(18% 0.03 260);
+    --bg-panel: oklch(22% 0.035 260);
+    
+    /* Brand Colors - Claw Coral */
+    --primary-h: 355;
+    --primary-bright: oklch(66% 0.22 var(--primary-h));
+    --primary-mid: oklch(58% 0.24 var(--primary-h));
+    --primary-dark: oklch(45% 0.20 var(--primary-h));
+    
+    /* Brand Colors - Abyssal Cyan */
+    --secondary-h: 185;
+    --secondary-bright: oklch(78% 0.15 var(--secondary-h));
+    --secondary-mid: oklch(68% 0.13 var(--secondary-h));
+    --secondary-dark: oklch(55% 0.11 var(--secondary-h));
+    
+    /* Support Colors */
+    --tertiary-h: 240;
+    --tertiary-bright: oklch(68% 0.18 var(--tertiary-h));
+    --tertiary-dark: oklch(50% 0.16 var(--tertiary-h));
+    
+    /* Semantic Colors */
+    --color-success: oklch(75% 0.14 165);
+    --color-warning: oklch(85% 0.15 95);
+    --color-error: oklch(68% 0.20 25);
+    --color-info: oklch(72% 0.13 230);
+    
+    /* Text Palette */
+    --text-primary: oklch(97% 0.01 260);
+    --text-secondary: oklch(72% 0.04 255);
+    --text-muted: oklch(50% 0.03 250);
+    --text-inverse: oklch(8% 0.02 260);
+    
+    /* Borders */
+    --border-subtle: color-mix(in oklch, var(--text-secondary) 16%, transparent);
+    --border-strong: color-mix(in oklch, var(--text-primary) 12%, transparent);
+    --border-accent: color-mix(in oklch, var(--primary-bright) 40%, transparent);
+    
+    /* Glow Effects */
+    --glow-primary: color-mix(in oklch, var(--primary-bright) 45%, transparent);
+    --glow-secondary: color-mix(in oklch, var(--secondary-bright) 35%, transparent);
+    --glow-tertiary: color-mix(in oklch, var(--tertiary-bright) 32%, transparent);
+    
+    /* Glass Morphism */
+    --bg-glass: color-mix(in oklch, var(--bg-panel) 72%, transparent);
+    --bg-overlay: color-mix(in oklch, var(--bg-deep) 72%, transparent);
+    
+    /* ============================================
+       TYPOGRAPHY SYSTEM
+       ============================================ */
+    
+    /* Font Stacks */
+    --font-display: 'Clash Display', system-ui, -apple-system, sans-serif;
+    --font-body: 'Satoshi', system-ui, -apple-system, sans-serif;
+    --font-mono: 'SF Mono', 'Fira Code', 'JetBrains Mono', 'Consolas', monospace;
+    
+    /* Type Scale - Fluid Typography with clamp() */
+    --text-xs: clamp(0.7rem, 0.65rem + 0.25vw, 0.75rem);
+    --text-sm: clamp(0.8rem, 0.75rem + 0.25vw, 0.875rem);
+    --text-base: clamp(0.95rem, 0.9rem + 0.25vw, 1rem);
+    --text-lg: clamp(1.05rem, 1rem + 0.25vw, 1.125rem);
+    --text-xl: clamp(1.15rem, 1.1rem + 0.25vw, 1.25rem);
+    --text-2xl: clamp(1.35rem, 1.25rem + 0.5vw, 1.5rem);
+    --text-3xl: clamp(1.65rem, 1.5rem + 0.75vw, 1.875rem);
+    --text-4xl: clamp(2rem, 1.75rem + 1.25vw, 2.25rem);
+    --text-5xl: clamp(2.5rem, 2rem + 2.5vw, 3rem);
+    
+    /* Font Weights */
+    --font-regular: 400;
+    --font-medium: 500;
+    --font-semibold: 600;
+    --font-bold: 700;
+    
+    /* Line Heights */
+    --leading-tight: 1.25;
+    --leading-snug: 1.375;
+    --leading-normal: 1.5;
+    --leading-relaxed: 1.75;
+    --leading-loose: 2;
+    
+    /* Letter Spacing */
+    --tracking-tight: -0.03em;
+    --tracking-normal: 0;
+    --tracking-wide: 0.05em;
+    --tracking-wider: 0.1em;
+    --tracking-widest: 0.15em;
+    
+    /* ============================================
+       SPACING SYSTEM - T-shirt sizing
+       ============================================ */
+    
+    --space-0: 0;
+    --space-px: 1px;
+    --space-0-5: 0.125rem;   /* 2px */
+    --space-1: 0.25rem;      /* 4px */
+    --space-1-5: 0.375rem;   /* 6px */
+    --space-2: 0.5rem;       /* 8px */
+    --space-2-5: 0.625rem;   /* 10px */
+    --space-3: 0.75rem;      /* 12px */
+    --space-3-5: 0.875rem;   /* 14px */
+    --space-4: 1rem;         /* 16px */
+    --space-5: 1.25rem;      /* 20px */
+    --space-6: 1.5rem;       /* 24px */
+    --space-7: 1.75rem;      /* 28px */
+    --space-8: 2rem;         /* 32px */
+    --space-9: 2.25rem;      /* 36px */
+    --space-10: 2.5rem;      /* 40px */
+    --space-11: 2.75rem;     /* 44px */
+    --space-12: 3rem;        /* 48px */
+    --space-14: 3.5rem;      /* 56px */
+    --space-16: 4rem;        /* 64px */
+    --space-20: 5rem;        /* 80px */
+    --space-24: 6rem;        /* 96px */
+    
+    /* ============================================
+       BORDER RADIUS SCALE
+       ============================================ */
+    
+    --radius-none: 0;
+    --radius-sm: 0.25rem;    /* 4px */
+    --radius-md: 0.5rem;     /* 8px */
+    --radius-lg: 0.75rem;    /* 12px */
+    --radius-xl: 1rem;       /* 16px */
+    --radius-2xl: 1.25rem;   /* 20px */
+    --radius-3xl: 1.5rem;    /* 24px */
+    --radius-full: 9999px;
+    
+    /* ============================================
+       SHADOWS & ELEVATION
+       ============================================ */
+    
+    --shadow-xs: 0 1px 2px color-mix(in oklch, var(--bg-deep) 30%, transparent);
+    --shadow-sm: 0 2px 4px color-mix(in oklch, var(--bg-deep) 30%, transparent);
+    --shadow-md: 0 8px 20px color-mix(in oklch, var(--bg-deep) 35%, transparent);
+    --shadow-lg: 0 18px 40px color-mix(in oklch, var(--bg-deep) 45%, transparent);
+    --shadow-xl: 0 30px 60px color-mix(in oklch, var(--bg-deep) 55%, transparent);
+    --shadow-2xl: 0 40px 80px color-mix(in oklch, var(--bg-deep) 65%, transparent);
+    
+    --shadow-inner: inset 0 1px 0 color-mix(in oklch, var(--text-primary) 4%, transparent);
+    --shadow-inner-lg: inset 0 2px 4px color-mix(in oklch, var(--bg-deep) 15%, transparent);
+    
+    /* Glow Shadows */
+    --shadow-glow-primary: 0 0 45px var(--glow-primary);
+    --shadow-glow-secondary: 0 0 45px var(--glow-secondary);
+    --shadow-glow-tertiary: 0 0 45px var(--glow-tertiary);
+    
+    /* Focus Rings */
+    --ring-primary: 0 0 0 3px var(--glow-primary);
+    --ring-secondary: 0 0 0 3px var(--glow-secondary);
+    --ring-tertiary: 0 0 0 3px var(--glow-tertiary);
+    --ring-offset: 0 0 0 2px var(--bg-deep);
+    
+    /* ============================================
+       TRANSITIONS & TIMING
+       ============================================ */
+    
+    /* Duration */
+    --duration-instant: 0ms;
+    --duration-fast: 150ms;
+    --duration-base: 240ms;
+    --duration-slow: 360ms;
+    --duration-slower: 500ms;
+    
+    /* Easing Functions */
+    --ease-linear: linear;
+    --ease-in: cubic-bezier(0.4, 0, 1, 1);
+    --ease-out: cubic-bezier(0, 0, 0.2, 1);
+    --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --ease-elastic: cubic-bezier(0.5, 1.5, 0.5, 1);
+    
+    /* Combined Transitions */
+    --transition-fast: var(--duration-fast) var(--ease-out);
+    --transition-base: var(--duration-base) var(--ease-in-out);
+    --transition-slow: var(--duration-slow) var(--ease-in-out);
+    
+    /* ============================================
+       Z-INDEX SCALE
+       ============================================ */
+    
+    --z-base: 0;
+    --z-below: -1;
+    --z-dropdown: 100;
+    --z-sticky: 200;
+    --z-fixed: 300;
+    --z-overlay: 400;
+    --z-modal: 500;
+    --z-popover: 600;
+    --z-tooltip: 700;
+    --z-toast: 800;
+    --z-max: 9999;
+    
+    /* ============================================
+       BREAKPOINTS (for use in container queries)
+       ============================================ */
+    
+    --breakpoint-sm: 640px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 1024px;
+    --breakpoint-xl: 1280px;
+    --breakpoint-2xl: 1536px;
+    
+    /* ============================================
+       ANIMATION PROPERTIES
+       ============================================ */
+    
+    --float-distance: -8px;
+    --float-duration: 4s;
+    
+    --pulse-scale-min: 0.95;
+    --pulse-scale-max: 1.05;
+    --pulse-duration: 2s;
+    
+    --rotate-degrees: 360deg;
+    --rotate-duration: 20s;
+  }
+  
+  /* ============================================
+     GRADIENTS - As reusable background values
+     ============================================ */
+  
+  :root {
+    --gradient-claw: linear-gradient(
+      135deg,
+      var(--primary-bright) 0%,
+      var(--secondary-bright) 100%
+    );
+    
+    --gradient-midnight: linear-gradient(
+      180deg,
+      color-mix(in oklch, var(--bg-surface) 90%, transparent) 0%,
+      color-mix(in oklch, var(--bg-deep) 95%, transparent) 100%
+    );
+    
+    --gradient-sheen: 
+      radial-gradient(
+        circle at 20% 20%,
+        var(--glow-primary),
+        transparent 55%
+      ),
+      radial-gradient(
+        circle at 80% 30%,
+        color-mix(in oklch, var(--glow-secondary) 80%, transparent),
+        transparent 60%
+      ),
+      radial-gradient(
+        circle at 50% 80%,
+        color-mix(in oklch, var(--glow-tertiary) 70%, transparent),
+        transparent 65%
+      );
+    
+    --gradient-primary: linear-gradient(
+      135deg,
+      var(--primary-bright) 0%,
+      var(--primary-dark) 100%
+    );
+    
+    --gradient-secondary: linear-gradient(
+      135deg,
+      var(--secondary-bright) 0%,
+      var(--secondary-dark) 100%
+    );
+    
+    --gradient-text: linear-gradient(
+      135deg,
+      var(--text-primary) 0%,
+      var(--primary-bright) 50%,
+      var(--secondary-bright) 100%
+    );
+  }
+  
+  /* ============================================
+     DARK MODE OVERRIDES (future-proofing)
+     ============================================ */
+  
+  @media (prefers-color-scheme: light) {
+    /* Light mode tokens would go here if needed */
+    /* Currently designed for dark mode only */
+  }
+  
+  /* ============================================
+     REDUCED MOTION OVERRIDES
+     ============================================ */
+  
+  @media (prefers-reduced-motion: reduce) {
+    :root {
+      --duration-fast: 0ms;
+      --duration-base: 0ms;
+      --duration-slow: 0ms;
+      --duration-slower: 0ms;
+      
+      --float-duration: 0ms;
+      --pulse-duration: 0ms;
+      --rotate-duration: 0ms;
+    }
+  }
+}

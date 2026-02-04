@@ -1,0 +1,38 @@
+---
+import Icon from "./Icon.astro";
+
+interface Pill {
+  name: string;
+  icon: string;
+  color: string;
+}
+
+interface Props {
+  pills: Pill[];
+}
+
+const { pills } = Astro.props;
+---
+
+<section class="integrations-preview">
+  <h2 class="section-title">
+    <span class="claw-accent">⟩</span> Works With Everything
+  </h2>
+  <div class="integrations-row">
+    {
+      pills.map((p) => (
+        <span class="integration-pill">
+          <Icon icon={p.icon} color={p.color} size={16} />
+          <span>{p.name}</span>
+        </span>
+      ))
+    }
+  </div>
+  <div class="integrations-links">
+    <a href="/integrations" class="integrations-link"
+      >View all 50+ integrations →</a
+    >
+    <span class="link-separator">·</span>
+    <a href="/showcase" class="integrations-link">See what people built →</a>
+  </div>
+</section>

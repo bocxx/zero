@@ -1,0 +1,20 @@
+---
+interface Props {
+  latestPost: {
+    slug: string;
+    data: {
+      title: string;
+    };
+  };
+}
+
+const { latestPost } = Astro.props;
+---
+
+<section class="latest-post">
+  <a href={`/blog/${latestPost.slug}`} class="latest-post-card">
+    <span class="latest-post-badge">New</span>
+    <span class="latest-post-title">{latestPost.data.title}</span>
+    <span class="latest-post-link">→</span>
+  </a>
+</section>

@@ -1,0 +1,224 @@
+/**
+ * Design System Theme
+ * Central configuration for colors, typography, spacing, and more
+ */
+
+:root {
+  /* ============================================
+     COLOR SYSTEM
+     ============================================ */
+  
+  /* Background Colors */
+  --bg-deep: #04060d;
+  --bg-surface: #090f1b;
+  --bg-elevated: #111a2b;
+  --bg-panel: #162137;
+  --bg-glass: rgba(10, 16, 28, 0.72);
+  --bg-overlay: rgba(4, 6, 13, 0.72);
+  
+  /* Primary Brand Colors - Claw Coral */
+  --color-primary-bright: #ff4d6d;
+  --color-primary-mid: #ff2151;
+  --color-primary-dark: #c10f3f;
+  --color-primary-glow: rgba(255, 77, 109, 0.45);
+  
+  /* Secondary Brand Colors - Abyssal Cyan */
+  --color-secondary-bright: #16f2d7;
+  --color-secondary-mid: #0fb8c8;
+  --color-secondary-dark: #0b839c;
+  --color-secondary-glow: rgba(22, 242, 215, 0.35);
+  
+  /* Support & Neutral Colors */
+  --color-tertiary-bright: #6d8bff;
+  --color-tertiary-dark: #3a4bb3;
+  --color-neutral-100: #f5f7ff;
+  --color-neutral-300: #c7d0e8;
+  --color-neutral-500: #8d9bc0;
+  --color-neutral-700: #4c5675;
+  --color-neutral-900: #1f2537;
+  
+  /* Text Colors */
+  --text-primary: #f4f7ff;
+  --text-secondary: #9aa6ca;
+  --text-muted: #5c6788;
+  --text-inverse: #05070e;
+  
+  /* Border Colors */
+  --border-subtle: rgba(154, 166, 202, 0.16);
+  --border-strong: rgba(244, 247, 255, 0.12);
+  --border-accent: color-mix(in srgb, var(--color-primary-bright) 40%, transparent);
+  
+  /* Semantic Colors */
+  --color-success: #2dd4bf;
+  --color-warning: #facc15;
+  --color-error: #f87171;
+  --color-info: #38bdf8;
+  
+  /* Brand Gradients */
+  --gradient-claw: linear-gradient(135deg, var(--color-primary-bright) 0%, var(--color-secondary-bright) 100%);
+  --gradient-midnight: linear-gradient(180deg, rgba(9, 15, 27, 0.9) 0%, rgba(4, 6, 13, 0.95) 100%);
+  --gradient-sheen: radial-gradient(circle at 20% 20%, rgba(255, 77, 109, 0.35), transparent 55%),
+                     radial-gradient(circle at 80% 30%, rgba(22, 242, 215, 0.28), transparent 60%),
+                     radial-gradient(circle at 50% 80%, rgba(109, 139, 255, 0.24), transparent 65%);
+  
+  /* ============================================
+     TYPOGRAPHY SYSTEM
+     ============================================ */
+  
+  /* Font Families */
+  --font-display: 'Clash Display', system-ui, sans-serif;
+  --font-body: 'Satoshi', system-ui, sans-serif;
+  --font-mono: 'SF Mono', 'Fira Code', 'JetBrains Mono', monospace;
+  
+  /* Font Sizes */
+  --text-xs: 0.75rem;    /* 12px */
+  --text-sm: 0.875rem;   /* 14px */
+  --text-base: 1rem;     /* 16px */
+  --text-lg: 1.125rem;   /* 18px */
+  --text-xl: 1.25rem;    /* 20px */
+  --text-2xl: 1.5rem;    /* 24px */
+  --text-3xl: 1.875rem;  /* 30px */
+  --text-4xl: 2.25rem;   /* 36px */
+  --text-5xl: 3rem;      /* 48px */
+  
+  /* Font Weights */
+  --font-regular: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  
+  /* Line Heights */
+  --leading-tight: 1.25;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.75;
+  
+  /* ============================================
+     SPACING SYSTEM
+     ============================================ */
+  
+  --space-1: 0.25rem;   /* 4px */
+  --space-2: 0.5rem;    /* 8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.25rem;   /* 20px */
+  --space-6: 1.5rem;    /* 24px */
+  --space-8: 2rem;      /* 32px */
+  --space-10: 2.5rem;   /* 40px */
+  --space-12: 3rem;     /* 48px */
+  --space-16: 4rem;     /* 64px */
+  
+  /* ============================================
+     BORDER RADIUS
+     ============================================ */
+  
+  --radius-sm: 0.25rem;   /* 4px */
+  --radius-md: 0.5rem;    /* 8px */
+  --radius-lg: 0.75rem;   /* 12px */
+  --radius-xl: 1rem;      /* 16px */
+  --radius-2xl: 1.25rem;  /* 20px */
+  --radius-full: 9999px;
+  
+  /* ============================================
+     SHADOWS
+     ============================================ */
+  
+  --shadow-sm: 0 1px 2px rgba(5, 7, 15, 0.3);
+  --shadow-md: 0 8px 20px rgba(4, 7, 15, 0.35);
+  --shadow-lg: 0 18px 40px rgba(4, 7, 15, 0.45);
+  --shadow-xl: 0 30px 60px rgba(4, 7, 15, 0.55);
+  --shadow-inner: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  --shadow-glow-primary: 0 0 45px color-mix(in srgb, var(--color-primary-bright) 35%, transparent);
+  --shadow-glow-secondary: 0 0 45px color-mix(in srgb, var(--color-secondary-bright) 30%, transparent);
+  --shadow-glow-tertiary: 0 0 45px color-mix(in srgb, var(--color-tertiary-bright) 32%, transparent);
+  
+  /* ============================================
+     TRANSITIONS
+     ============================================ */
+  
+  --transition-fast: 150ms cubic-bezier(0.5, 0, 0.2, 1);
+  --transition-base: 240ms cubic-bezier(0.45, 0, 0.2, 1);
+  --transition-slow: 360ms cubic-bezier(0.35, 0, 0.25, 1);
+  
+  /* Focus Rings */
+  --ring-primary: 0 0 0 3px color-mix(in srgb, var(--color-primary-bright) 35%, transparent);
+  --ring-secondary: 0 0 0 3px color-mix(in srgb, var(--color-secondary-bright) 30%, transparent);
+  --ring-tertiary: 0 0 0 3px color-mix(in srgb, var(--color-tertiary-bright) 28%, transparent);
+  
+  /* ============================================
+     Z-INDEX SCALE
+     ============================================ */
+  
+  --z-base: 0;
+  --z-dropdown: 1000;
+  --z-sticky: 1100;
+  --z-fixed: 1200;
+  --z-modal: 1300;
+  --z-popover: 1400;
+  --z-tooltip: 1500;
+}
+
+/* ============================================
+   GLOBAL RESETS
+   ============================================ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-deep);
+  background-image: var(--gradient-midnight), var(--gradient-sheen);
+  background-attachment: fixed;
+  background-size: cover;
+  color: var(--text-primary);
+  line-height: var(--leading-normal);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: var(--color-primary-bright);
+  color: var(--bg-deep);
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+
+/* Screen reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Custom focus state */
+:focus-visible {
+  outline: none;
+  box-shadow: var(--ring-secondary);
+  border-radius: var(--radius-sm);
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
